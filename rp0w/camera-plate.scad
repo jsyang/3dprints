@@ -1,17 +1,19 @@
+use <threads.scad>;
+
 // Pi Zero W Camera board
 
-LENGTH = 6.5;
-WIDTH = 3;
+LENGTH = 65;
+WIDTH = 30;
 
 module plate(
-    peg_hole_radius=0.14,
-    peg_offset=0.2,
-    plate_height=0.2
+    peg_hole_radius=1.4,
+    peg_offset=2,
+    plate_height=2
 ) {
     linear_extrude(height=plate_height)
     difference() {
         hull() {
-            let (radius = 0.3) {
+            let (radius = 3) {
                 translate([radius,radius,0]) 
                     circle(r=radius, $fn=16);
                 translate([(LENGTH - radius),radius,0]) 
@@ -43,9 +45,28 @@ module plate(
     }
 }
 
-module tripod_nut() {
-    cylinder(r=0.6,h=0.5, $fn=6);
+module camera() {
+    cube([12,9,6]);
 }
 
-plate();
+module tripod_nut() {
+    cylinder(r=6,h=5, $fn=6);
+}
 
+// plate();
+// camera();
+
+module fisheye_adaptor() {
+    translate([0,0,3.5])
+    rotate([0,180,0])
+    difference() {
+        cube([20,20,3.5]);
+        
+        // thread diameter for this is indeed 17.8 to mate with the fisheye lens
+        translate([10,10,-0.01]) 
+            metric_thread(diameter=17.8, pitch=1, length=2.5);
+    }
+
+}
+
+fisheye_nut();
