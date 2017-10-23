@@ -2,4 +2,4 @@
 *.gcode
 *.stl
 !junqi/*.stl
-
+*.json
