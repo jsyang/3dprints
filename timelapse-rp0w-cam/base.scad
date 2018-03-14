@@ -64,9 +64,9 @@ module layer(nutLongEdge=12.5, height=3, isEndLayer=true) {
       }
     }
    
-    if(isEndLayer) {
+    if(false && isEndLayer) {
       translate([(plateWidth + 27)/2, plateHeight])
-      prong();
+      prong(); 
       
       translate([(plateWidth - 27)/2, plateHeight])
       mirror([1,0,0])
@@ -75,5 +75,5 @@ module layer(nutLongEdge=12.5, height=3, isEndLayer=true) {
   }
 }
 
-layer();
+layer(height=1.2);
 //layer(height=8, isEndLayer = false);

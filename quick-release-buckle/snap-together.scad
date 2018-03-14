@@ -98,52 +98,85 @@ module snap_together_lock_posts() {
   }
 }
 
-linear_extrude(height=5)
-snap_together_key();
+//linear_extrude(height=5)
+//snap_together_key();
 
-module snap_together_lock() {
-  linear_extrude(height=2.7)
-  snap_together_lock_posts();
-
-  translate([0,0,-2])
-  linear_extrude(height=2) {
-    difference(){
-      hull() {
-        translate([15,-21,0])
-        circle(1);
-        translate([-15,-21,0])
-        circle(1);
-
-        translate([15,-12,0])
-        circle(1);
-        translate([-15,-12,0])
-        circle(1);
+module snap_together_lock(isMale=true) {
+  difference() {
+    union() {
+      difference(){
+        linear_extrude(height=3.7)
+        snap_together_lock_posts();
         
-        translate([11,-1.7,0])
-        circle(1);
-        translate([-11,-1.7,0])
-        circle(1);
-
-        translate([5,16,0])
-        circle(1);        
-        translate([-5,16,0])
-        circle(1);
+        // Cuts to interlock the two halves
+        if(isMale==true){
+          translate([-20,11,2.7])
+          cube([40,3,2]);
+          
+          translate([-20,-3,2.7])
+          cube([40,3,2]);
+          
+          translate([-20,-9,2.7])
+          cube([40,3,2]);
+          
+          translate([-20,-15,2.7])
+          cube([40,3,2]);
+          
+          translate([-20,-21,2.7])
+          cube([40,3,2]);
+        } else {
+          translate([-20,14-0.1,2.7])
+          cube([40,3.2,2]);
+          
+          translate([-20,-6+.1,2.7])
+          cube([40,3-.2,2]);
+          
+          translate([-20,-12+.1,2.7])
+          cube([40,3-.2,2]);
+          
+          translate([-20,-18+.1,2.7])
+          cube([40,3-.2,2]);
+          
+          translate([-20,-24+.1,2.7])
+          cube([40,3-.2,2]);
+        }
       }
-      
-      translate([11,6,0])
-      circle(7);
-      
-      translate([-11,6,0])
-      circle(7);
 
+      translate([0,0,-2])
+      linear_extrude(height=2) {
+        difference(){
+          hull() {
+            translate([15,-21,0])
+            circle(1);
+            translate([-15,-21,0])
+            circle(1);
+
+            translate([15,-12,0])
+            circle(1);
+            translate([-15,-12,0])
+            circle(1);
+            
+            translate([11,-1.7,0])
+            circle(1);
+            translate([-11,-1.7,0])
+            circle(1);
+
+            translate([5,16,0])
+            circle(1);        
+            translate([-5,16,0])
+            circle(1);
+          }
+          
+          translate([11,6,0])
+          circle(7);
+          
+          translate([-11,6,0])
+          circle(7);
+
+        }
+      }
     }
-  }
-}
-
-module snap_together_lock_full() {
-    difference() {
-    snap_together_lock();
-
+    
     translate([-3.6,13.7,-4])
     cube([7.2,2,8]);
     
@@ -155,4 +188,7 @@ module snap_together_lock_full() {
   }
 }
 
-// snap_together_lock_full();
+snap_together_lock();
+
+translate([40,0,0])
+snap_together_lock(false);
