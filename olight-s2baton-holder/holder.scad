@@ -31,6 +31,15 @@ module S2B_handlebar_face(
   }
 }
 
+module S2B_handlebar_interface() {
+  radius = (20.4+3)/2;
+  height = 40;
+  
+  translate([0,30,radius+3.5])
+  rotate([0,90,0])
+  cylinder(h=height, r=radius, center=true, $fn=6);
+}
+
 module S2B_holder_master(height=30) {
   linear_extrude(height=height)  
   union() {
@@ -49,16 +58,13 @@ difference() {
     circle(r=22.4 / 2);
   
   // Middle cutout (zip-tie)
-  translate([-20,-14 + 25/2, 8])
-    cube([40,14,16]);
+  translate([-20, -10 + 25/2, 8])
+    cube([40,10,16]);
   
-  // Adapter slot 
-  union() {
-    translate([-10, 20 - 5/2, 5])
-      cube([40, 5 + .4, 20]); // 20 -.3 = fitting
-    
-    translate([-12/2, 20 + 5/2, (30 - 12)/2])
-      cube([32, 6, 12]); // 12 -.3 = fitting
-  }
+  // Middle cutout (zip-tie)
+  translate([-11.2, -12 + 25/2, -5])
+    cube([22.4,12,40]);
+  
+  S2B_handlebar_interface();
 }
 
