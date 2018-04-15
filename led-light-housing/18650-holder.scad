@@ -22,7 +22,7 @@ module terminal(tolerance=0.3) {
   }
 }
 
-module cell18650(tolerance=0.3) {
+module cell18650(tolerance=0.5) {
   cylinder(r=(18+tolerance)/2, h=65,$fn=32);
 }
 
