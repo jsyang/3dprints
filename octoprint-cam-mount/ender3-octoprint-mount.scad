@@ -1,5 +1,5 @@
 // Set this to false if printing
-DISPLAY = true;
+DISPLAY = false;
 
 module endStopHole(){
   translate([0,0,-0.5]*3)
@@ -144,33 +144,21 @@ module D_ElbowPlate() {
   }
 }
 
-/*
-translate([0,0,0])
-  C_ArmPlate();
-translate([0,10,0])
-  C_ArmPlate();
-translate([0,20,0])
-  C_ArmPlate();
-translate([0,30,0])
-  C_ArmPlate();
-*/
-
-
-// D_ElbowPlate();
-
-
 // Part E -- Mount Plate x 1
 
 module E_MountPlate() {
   TOLERANCE = 0.25;
   
+  PLATE_SIZE = [20,30,2];
+  
   difference() {
     union() {
-      translate([-20,-10,-1])
-      cube([40,20,2]);
-      
       translate([0,0,-1])
-      cylinder(r=10,h=1,$fn=32); 
+      translate(PLATE_SIZE*-0.5)
+      cube(PLATE_SIZE);
+      
+      translate([0,0,-2])
+      cylinder(r=10,h=2,$fn=32); 
       
       translate([0,0,-7])
       cylinder(r=5-TOLERANCE,h=6,$fn=32); 
@@ -180,18 +168,29 @@ module E_MountPlate() {
     }
     
     
-    translate([2,-10,-20-2])
+    translate([2,-10,-20-2.1])
     cube([4,20,20]);
     
-    translate([-4-2,-10,-20-2])
+    translate([-4-2,-10,-20-2.1])
     cube([4,20,20]);
 
     translate([-4,0,-7])
     rotate([0,90,0])
     cylinder(r=1.6,h=8,$fn=32);
+    
+    translate([3.5-10,15-3.5,-2.5])
+    cylinder(r=1.6, h=5, $fn=32);
+    
+    translate([3.5-10,-15+3.5,-2.5])
+    cylinder(r=1.6, h=5, $fn=32);
+
+    translate([3.5+3,15-3.5-12.4,-2.5])
+    cylinder(r=0.9, h=5, $fn=32);
+
+    translate([3.5+3,15-3.5,-2.5])
+    cylinder(r=0.9, h=5, $fn=32);
   }
 }
-
 
 if(DISPLAY) {
   translate([0,37,-22]) 
@@ -236,7 +235,7 @@ if(DISPLAY) {
   E_MountPlate();
 } else {
   
-  translate([0,35,0])
+  translate([0,40,0])
     A_EndStopBracket();
 
   translate([-35,-0,3])
@@ -256,8 +255,10 @@ if(DISPLAY) {
     D_ElbowPlate();
 
 
-  translate([0,0,1])
+  translate([0,2,1])
   rotate([180,0,0])
     E_MountPlate();
 }
+
+
 
