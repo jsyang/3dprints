@@ -72,7 +72,6 @@ module B_BatteryHolder() {
   }
 }
 
-
 // B_BatteryHolder();
 
 module C_WireSlotFiller() {
@@ -84,5 +83,21 @@ module C_WireSlotFiller() {
   }
 }
 
+/*
 rotate([90,0,0])
-C_WireSlotFiller();
+  C_WireSlotFiller();
+*/
+
+module D_HexCover() {
+  difference() {
+    cylinder(r=28/2+3, h=80, $fn=6);
+
+    translate([0,0,-1])
+      cylinder(r=28/2+0.15, h=90, $fn=6);
+
+    translate([-100,-20-10,-1])    
+      cube([200,20,200]);
+  }
+}
+
+D_HexCover();
