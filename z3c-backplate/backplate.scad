@@ -9,12 +9,6 @@ cornerRadius = 3.5;
 length=mean([120.4-tolerance]);
 width=mean([57.7-tolerance]);
 
-
-module nutHole(r1=nutHoleRadius, r2=nutHoleRadius) {
-  translate([0,0,-3])
-  cylinder(r1=r1, r2=r2, h=6, $fn=6);
-}
-
 module backPlateL1() {
   $fn=32;
   depth=1;
@@ -107,64 +101,30 @@ module main() {
   cubeSize = 9-tolerance+0.06;
   cornerCutSize = 1.4;
   
+  pegSize = [12.9,12.9,2.5];
+  topSize = [17,17,2];
+  
   rotate([0,0,90])  {
-    difference(){
-      union(){
-        backPlateL1();
-        translate([0,0,1])
-          backPlateL2();
+    union(){
+      backPlateL1();
+      translate([0,0,1])
+        backPlateL2();
 
-        // square insert
-        translate([0,0,3])
-        translate([length+cornerRadius,width+cornerRadius,0]*0.5)
-        translate([-0.5,-0.5,0]*cubeSize)
-        cube([cubeSize,cubeSize,1.5]);
-
-        translate([0,0,2])
-        translate([length+cornerRadius,width+cornerRadius,0]*0.5)        
-        cylinder(r2=2,r1=30,$fn=6,h=1.5);
-      }
-      
-      // cutting corners
-      translate([cubeSize/2,cubeSize/2,3.301])
-      translate([length+cornerRadius,width+cornerRadius,0]*0.5)
-      rotate([0,0,45])
-      translate([-0.5,-0.5,0]*cornerCutSize)
-      cube([1,1,1]*cornerCutSize);
-      translate([-cubeSize/2,cubeSize/2,3.301])
-      translate([length+cornerRadius,width+cornerRadius,0]*0.5)
-      rotate([0,0,45])
-      translate([-0.5,-0.5,0]*cornerCutSize)
-      cube([1,1,1]*cornerCutSize);
-      translate([-cubeSize/2,-cubeSize/2,3.301])
-      translate([length+cornerRadius,width+cornerRadius,0]*0.5)
-      rotate([0,0,45])
-      translate([-0.5,-0.5,0]*cornerCutSize)
-      cube([1,1,1]*cornerCutSize);
-      translate([cubeSize/2,-cubeSize/2,3.301])
-      translate([length+cornerRadius,width+cornerRadius,0]*0.5)
-      rotate([0,0,45])
-      translate([-0.5,-0.5,0]*cornerCutSize)
-      cube([1,1,1]*cornerCutSize);
-      
-      
-      
-      // pilot screw hole for square insert
+      // square insert
       translate([0,0,2])
-      translate([length+cornerRadius,width+cornerRadius,1]*0.5)      
-      cylinder(r=4.5/2+tolerance,h=2.6,$fn=32);      
-      
-      // pilot screw hole for square insert
-      translate([0,0,-1])
-      translate([length+cornerRadius,width+cornerRadius,1]*0.5)      
-      cylinder(r1=4,r2=1.5,h=1,$fn=32);      
+      translate([length+cornerRadius,width+cornerRadius,0]*0.5)
+      translate([0,0,pegSize[2]]*.5)
+      translate(pegSize*-.5)
+      cube(pegSize);
 
+      // square insert top
+      translate([0,0,2+2.5])
+      translate([length+cornerRadius,width+cornerRadius,0]*0.5)
+      translate([0,0,topSize[2]]*.5)
+      translate(topSize*-.5)
+      cube(topSize);
 
-      //* screw hole for square insert
-      translate([length+cornerRadius,width+cornerRadius,-1]*0.5)      
-      cylinder($fn=32,r=(1.6+tolerance)/2,h=4);
-      //*/
-    }  
+    }      
   }
 }
 
