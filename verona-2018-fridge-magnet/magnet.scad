@@ -33,11 +33,11 @@ module C_WhitePrint(_isBold=false,threshold=1.2) {
 
 module D_TicketHolder(){ 
   BACK_SIZE=[45,25];
-  HOLDERHOLE_SIZE=[44.6,10,2.5];
+  HOLDERHOLE_SIZE=[44.6,10,2.65];
   
   difference() {
     
-    linear_extrude(height=5)
+    linear_extrude(height=5.5)
     translate(-.5*BACK_SIZE)
     minkowski($fn=32){
       square(BACK_SIZE);
@@ -48,10 +48,10 @@ module D_TicketHolder(){
     translate(-.5*HOLDERHOLE_SIZE)    
     cube(HOLDERHOLE_SIZE);
     
-    translate([-10,0,0.75])
+    translate([-10,0,0.64])
       cylinder(r=2.6,h=7,$fn=32);
     
-    translate([10,0,0.75])
+    translate([10,0,0.64])
       cylinder(r=2.6,h=7,$fn=32);
   }
 }
