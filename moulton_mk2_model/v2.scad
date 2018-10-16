@@ -4,13 +4,13 @@ FN=32; // medium quality
 
 module A_Wheel() {
   HORIZON_CUT=[100,100];
-  bevel=2;
+  bevel=3;
   wheelRadius=20;
   
   minkowski($fn=FN) {
     rotate_extrude(convexity=10, $fn=FN)
     difference() {
-      scale([1,0.1])
+      scale([1,0.05])
         circle(wheelRadius-bevel);
       
       translate([HORIZON_CUT[0]*-0.5,0])
@@ -141,6 +141,60 @@ module D_FrameBlockKeep(){
   }
 }
 
+module D_SeatShape() {
+  union() {
+    translate([3,0,0])
+      circle(3,$fn=FN);
+    translate([-3,0,0])
+      circle(3,$fn=FN);
+    
+    hull() {
+      translate([2.5,-3,0])
+        circle(4,$fn=FN);
+      translate([-2.5,-3,0])
+        circle(4,$fn=FN);
+
+      translate([0,-8,0])
+        circle(4,$fn=FN);
+    }
+
+    hull() {      
+      translate([0,-8,0])
+        circle(4,$fn=FN);
+      
+      translate([0,-20,0])
+        circle(2.5,$fn=FN);
+    }
+  }
+}
+
+// needs a better one
+module D_Seat(){
+  translate([0,5,1])
+  rotate([15,0,0]) {      
+    minkowski($fn=FN) {
+      linear_extrude(height=1)
+        D_SeatShape();
+    
+      sphere(1);
+    }
+  }
+}
+
+module D_Seatpost(){
+  TOP_SIZE=[7,4-.5,20];
+  
+  hull() {
+    cylinder(r=4-.5, h=20,$fn=FN);
+    cylinder(r=2, h=50,$fn=FN);
+  }
+  
+  cylinder(r=2, h=55,$fn=FN);
+  
+  translate([0,0,55])
+    D_Seat();
+}
+
 module D_Frame() {
   difference() {
     translate([25,5,0])
@@ -156,28 +210,36 @@ module D_Frame() {
       }
       
       // bottom bracket shell
-      // todo
+      translate([0,-6,24])
+      rotate([0,-90,0])
+      translate([0,0,1]*-.5*7)
+        cylinder(r=4, h=7, $fn=FN);
       
       // seatpost
-      translate([0,0,20])
+      translate([0,0,24])
       rotate([-90,0,0])
-      hull() {
-        cylinder(r=4-.5, h=50,$fn=FN);
-      }
+        D_Seatpost();
       
-      // crosspost
-      translate([0,20,20])
+      // top tube
+      translate([0,18,25])
       rotate([22,0,0])
-        cylinder(r=4-.5, h=50,$fn=FN);
+        cylinder(r=4-.5, h=48,$fn=FN);
       
       // headtube
       translate([0,-10,90])
       rotate([-90,0,0])
       hull() {
-        cylinder(r=4-.5, h=50,$fn=FN);
+        cylinder(r=4-.5, h=45,$fn=FN);
       }
 
     }
+    
+    // bottom bracket hole
+    rotate([0,0,5])
+    translate([50,1,-4])
+    translate([0,0,1]*-.5*8)
+      cylinder(r=2, h=16, $fn=FN);
+
     
     // pivot hole
     rotate([0,0,5])
@@ -189,7 +251,7 @@ module D_Frame() {
   }
 }
 
-# A_Wheel();
+ A_Wheel();
 //# B_Axle();
 
 C_RearFork();
