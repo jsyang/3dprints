@@ -411,10 +411,13 @@ if(0) {
   }
 } 
 
+// Display only
 if(1) {
-  A_Wheel();
-  rotate([0,0,7.5])
-    C_RearFork();
-  rotate([0,0,7.5])
-    D_Frame(true);
+  rotate([90,0,0]) {
+    A_Wheel();
+    rotate([0,0,7.5])
+      C_RearFork();
+    rotate([0,0,7.5])
+      D_Frame(true);
+  }
 }
