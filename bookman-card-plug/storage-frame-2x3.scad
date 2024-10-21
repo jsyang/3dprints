@@ -1,4 +1,5 @@
 module body() {
+    union() {
     difference() {
         cube([59+3+3,50,6]);
         
@@ -68,9 +69,26 @@ module body() {
             
         }
     }
+    
+    // Stopper tabs to prevent loose carts from falling through
+    $fn=128;
+    translate([(59+3+3-57)*.5,40,6-2.2])
+    scale([1,1.5,1])
+    union() {
+        translate([10,0,0])
+        rotate([0,90,0])
+        cylinder(h=5, d=1, center=true);
+        
+        translate([59-3-10,0,0])
+        rotate([0,90,0])
+        cylinder(h=5, d=1, center=true);
+    }
+    
+    }
 }
 
 // sheet is 200mm x 310mm
+
 
 for(i=[0:1:1]){
 for(j=[0:1:2]){
