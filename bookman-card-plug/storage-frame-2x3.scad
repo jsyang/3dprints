@@ -1,3 +1,5 @@
+use <Univers_LT_59_Ultra_Condensed.ttf>;
+ 
 module body() {
     union() {
     difference() {
@@ -89,10 +91,20 @@ module body() {
 
 // sheet is 200mm x 310mm
 
+difference() {
 
-for(i=[0:1:1]){
-for(j=[0:1:2]){
-    translate([65*i,50*j,0])
-    body();
-}
+    union() {
+        for(i=[0:1:1]){
+        for(j=[0:1:2]){
+            translate([65*i,50*j,0])
+            body();
+        }
+        }
+    }
+    
+    translate([.5,2,3])
+    rotate([90,180,-90])
+    linear_extrude(4)
+    text("FRANKLIN BOOKMAN CARDS", font="Univers LT 59 UltraCondensed", valign="center", size=4.7);
+    
 }
